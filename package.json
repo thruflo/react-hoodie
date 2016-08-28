@@ -1,0 +1,19 @@
+{
+  "name": "react-hoodie",
+  "version": "0.0.1",
+  "description": "React Hoodie bindings.",
+  "main": "src/index.js",
+  "license": "Unlicense",
+  "author": "James Arthur <thruflo@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/thruflo/react-hoodie.git"
+  },
+  "dependencies": {
+    "lodash.debounce": "^4.0.8"
+  },
+  "peerDependencies": {
+    "hoodie": ">22",
+    "react": "*"
+  }
+}
