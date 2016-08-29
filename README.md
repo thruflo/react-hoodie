@@ -3,6 +3,27 @@
 
 React Hoodie bindings. Inspired by [react-redux][] and [re-base][].
 
+It's similar to [Redux][] in that:
+
+* there is one true store
+* writes are dispatched as tasks
+
+And similar to [re-base][] in that:
+
+* you explicitly bind data to component state
+
+Plus, thanks to [Hoodie][]:
+
+* it works offline (properly, i.e.: writes and first load)
+* it syncs in realtime across multiple clients
+
+[react-redux]: http://redux.js.org/docs/basics/UsageWithReact.html
+[re-base]: https://github.com/tylermcginnis/re-base
+[Redux]: http://redux.js.org/docs/introduction/ThreePrinciples.html
+[Hoodie]: http://docs.hood.ie/
+
+## Usage
+
 Wrap your app in a hoodie:
 
 ```javascript
@@ -64,22 +85,3 @@ App.contextTypes = {
   hoodie: React.PropTypes.any
 }
 ```
-
-It's similar to [Redux][] in that:
-
-* there is one true store
-* writes are dispatched as tasks
-
-And similar to [re-base][] in that:
-
-* you explicitly bind data to component state
-
-Plus, thanks to [Hoodie][]:
-
-* it works offline (properly, i.e.: writes and first load)
-* it syncs in realtime across multiple clients
-
-[react-redux]: http://redux.js.org/docs/basics/UsageWithReact.html
-[re-base]: https://github.com/tylermcginnis/re-base
-[Redux]: http://redux.js.org/docs/introduction/ThreePrinciples.html
-[Hoodie]: http://docs.hood.ie/
