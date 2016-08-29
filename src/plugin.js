@@ -27,7 +27,7 @@ const watchChanges = function (store, type, handle, clear) {
     key = 'change' // type + ':change'
     listener = function (eventName, changedObject) {
       if (changedObject.type === type) {
-        return handle(arguments);
+        return handle(changedObject)
       }
     }
   }
