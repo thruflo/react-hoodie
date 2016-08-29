@@ -1,31 +1,35 @@
-import { debouce, mimic, warn } from './util'
+const HoodieClient = require('@hoodie/client')
+const util = require ('./util')
 
-// Utility functions to update a component's state.
-function setState (component, key, value) {
+const setState = function (component, key, value) {
   var s = {};
   s[key] = value;
   return component.setState(s);
 }
-function clearState (component, key, is_obj) {
+const clearState = function (component, key, is_obj) {
   var v = is_obj ? {} : [];
   return setState(component, key, v);
 }
 
 // Query hoodie for data and update component state with the result.
-function findAndSetState (store, component, key, type, is_obj) {
+const findAndSetState = function (store, component, key, type, is_obj) {
   var handle = setState.bind(null, component, key);
   var find = is_obj ? store.find : store.findAll;
-  return find(type).then(handle, warn);
+  return find(type).then(handle, util.warn);
 };
 
 // Listen for changes to a hoodie type (can be a string or a query
 // function -- see the `hoodie.store.findAll` docs). When anything
 // relevant happens, call the handler function.
-function watchChanges (store, type, handle, clear) {
+const watchChanges = function (store, type, handle, clear) {
   var key, listener, dbl;
   if (typeof(type) === 'string') {
-    key = type + ':change';
-    listener = handle;
+    key = 'change'; // type + ':change';
+    listener = function (eventName, changedObject) {
+      if (changedObject.type === type) {
+        return handle(arguments);
+      }
+    }
   }
   else if (typeof(type) === 'function') {
     key = 'change';
@@ -41,7 +45,7 @@ function watchChanges (store, type, handle, clear) {
       'type': type
     });
   }
-  dbl = debounce(listener);
+  dbl = util.debounce(listener);
   store.on(key, dbl);
   store.on('clear', clear);
   return function () {
@@ -49,7 +53,7 @@ function watchChanges (store, type, handle, clear) {
     store.off(key, dbl);
   }
 }
-function fetchAndWatch (store, component, type, key, is_obj) {
+const fetchAndWatch = function (store, component, type, key, is_obj) {
   var fetch, clear, watch;
   fetch = findAndSetState.bind(null, store, component, key, type, is_obj);
   clear = clearState.bind(null, component, key, is_obj);
@@ -60,7 +64,7 @@ function fetchAndWatch (store, component, type, key, is_obj) {
 // Bind a react state property to a hoodie object or collection. Returns an
 // object which provides the hoodie store api (where appropriate, scoped to
 // the type) *and* an `unbind` method to unbind the event listeners.
-function bindToState (is_obj, component, type, key, store) {
+const bindToState = function (is_obj, component, type, key, store) {
   var api, off, scoped_store, type_is_string;
   type_is_string = typeof(type) === 'string';
   scoped_store = store || type_is_string ? this.store(type) : this.store;
@@ -74,9 +78,16 @@ function bindToState (is_obj, component, type, key, store) {
     }
     off();
   }
-  api = mimic(scoped_store);
+  api = util.mimic(scoped_store);
   api.unbind = unbind;
   return api;
 }
 
-export default bindToState
+exports.Hoodie = function (options) {
+  var hoodie = new HoodieClient(options)
+  hoodie.plugin({
+    bind: bindToState.bind(hoodie, true),
+    bindAll: bindToState.bind(hoodie, false)
+  })
+  return hoodie
+}

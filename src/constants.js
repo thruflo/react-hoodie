@@ -1,6 +1,8 @@
-export const DEBOUNCE_DELAY = 20 // ms
-export const DEBOUNCE_CUTOFF = 180 // ms
-export const STORE_METHODS = [
+
+exports.DEBOUNCE_DELAY = 20 // ms
+exports.DEBOUNCE_CUTOFF = 180 // ms
+
+exports.STORE_METHODS = [
   'add',
   'find',
   'findOrAdd',

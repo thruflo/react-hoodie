@@ -1,4 +1,4 @@
-import { Children, Component, PropTypes } from 'react'
+const { Children, Component, PropTypes } = require('react')
 
 const hoodieShape = PropTypes.shape({
   store: PropTypes.func.isRequired,
@@ -7,14 +7,10 @@ const hoodieShape = PropTypes.shape({
 })
 
 class Provider extends Component {
-  constructor (props, context) {
-    super(props, context)
-    this.hoodie = props.hoodie
-  }
   getChildContext () {
-    return { hoodie: this.hoodie }
+    return { hoodie: this.props.hoodie }
   }
-  render() {
+  render () {
     const { children } = this.props
     return Children.only(children)
   }
@@ -28,4 +24,4 @@ Provider.childContextTypes = {
   hoodie: hoodieShape.isRequired
 }
 
-export default Provider
+exports.Provider = Provider
