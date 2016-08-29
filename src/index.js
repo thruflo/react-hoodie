@@ -1,2 +1,2 @@
-exports.Hoodie = require('./plugin').Hoodie;
-exports.Provider = require('./provider').Provider;
+exports.Hoodie = require('./plugin').Hoodie
+exports.Provider = require('./provider').Provider
