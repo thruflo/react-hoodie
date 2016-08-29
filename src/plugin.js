@@ -83,6 +83,7 @@ const bindToState = function (is_obj, component, type, key, store) {
   return api
 }
 
+exports.bindToState = bindToState
 exports.Hoodie = function (options) {
   var hoodie = new HoodieClient(options)
   hoodie.plugin({
