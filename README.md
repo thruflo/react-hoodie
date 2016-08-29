@@ -1,6 +1,8 @@
 
 # react-hoodie
 
+[![npm version](https://badge.fury.io/js/react-hoodie.svg)](https://badge.fury.io/js/react-hoodie)
+
 React Hoodie bindings. Inspired by [react-redux][] and [re-base][].
 
 It's similar to [Redux][] in that:
