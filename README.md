@@ -12,10 +12,10 @@ And similar to [re-base][] in that:
 
 * you explicitly bind data to component state
 
-Plus, thanks to [Hoodie][]:
+Plus, thanks to [Hoodie][] it:
 
-* it works offline (properly, i.e.: writes and first load)
-* it syncs in realtime across multiple clients
+* works offline (properly, i.e.: writes and first load)
+* syncs in realtime across multiple clients
 
 [react-redux]: http://redux.js.org/docs/basics/UsageWithReact.html
 [re-base]: https://github.com/tylermcginnis/re-base
